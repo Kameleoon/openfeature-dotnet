@@ -1,91 +1,209 @@
-# OpenFeature .NET SDK
+# Kameleoon OpenFeature provider for .NET
 
-## Getting started
+The Kameleoon OpenFeature provider for .NET allows you to connect your OpenFeature .NET implementation to Kameleoon without installing the C#  Kameleoon SDK.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+> [!WARNING]
+> This is a beta version. Breaking changes may be introduced before general release.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Supported .NET versions
 
-## Add your files
+This version of the SDK is built for the following targets:
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+* .NET Framework 4.6.2: runs on .NET Framework 4.6.2 and above.
+* .NET Standard 2.0: runs in any project that is targeted to .NET Standard 2.x rather than to a specific runtime platform.
 
+## Get started
+
+This section explains how to install, configure, and customize the Kameleoon OpenFeature provider.
+
+### Install dependencies
+
+First, choose your preferred dependency manager from the following options and install the required dependencies in your application.
+
+#### .NET CLI
+
+```shell
+dotnet add package Kameleoon.OpenFeature
+dotnet add package KameleoonClient
+dotnet add package OpenFeature
 ```
-cd existing_repo
-git remote add origin https://development.kameleoon.net/sdk/openfeature-dotnet-sdk.git
-git branch -M master
-git push -uf origin master
+#### Package Manager
+
+```shell
+NuGet\Install-Package Kameleoon.OpenFeature
+NuGet\Install-Package KameleoonClient
+NuGet\Install-Package OpenFeature
+```
+#### Package Reference
+
+```xml
+<PackageReference Include="Kameleoon.OpenFeature" />
+<PackageReference Include="KameleoonClient" />
+<PackageReference Include="OpenFeature" />
+```
+#### Packet CLI
+
+```shell
+paket add Kameleoon.OpenFeature
+paket add KameleoonClient
+paket add OpenFeature
 ```
 
-## Integrate with your tools
+#### Cake
 
-- [ ] [Set up project integrations](https://development.kameleoon.net/sdk/openfeature-dotnet-sdk/-/settings/integrations)
+```shell
+// Install Kameleoon.OpenFeature as a Cake Addin
+#addin nuget:?package=Kameleoon.OpenFeature
+// Install KameleoonClient as a Cake Addin
+#addin nuget:?package=KameleoonClient&version=4.4.1
+// Install OpenFeature as a Cake Addin
+#addin nuget:?package=OpenFeature&version=1.5.0
 
-## Collaborate with your team
+// Install Kameleoon.OpenFeature as a Cake Tool
+#tool nuget:?package=Kameleoon.OpenFeature
+// Install KameleoonClient as a Cake Tool
+#tool nuget:?package=KameleoonClient&version=4.4.1
+// Install OpenFeature as a Cake Tool
+#tool nuget:?package=OpenFeature&version=1.5.0
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Usage
 
-## Test and Deploy
+The following example shows how to use the ConfigCat provider with the OpenFeature SDK.
 
-Use the built-in continuous integration in GitLab.
+```csharp
+using Kameleoon.OpenFeature;
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+namespace Kameleoon.OpenFeature.App
+{
+    class App {
+        static void Main(string[] args) {
+            var config = new KameleoonClientConfig(clientId: clientId, clientSecret: clientSecret);
+            var provider = new KameleoonProvider(siteCode, config);
 
-***
+            OpenFeature.Api.Instance.SetProvider(provider);
 
-# Editing this README
+            var client = OpenFeature.Api.Instance.GetClient();
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+            var isFeatureEnabled = client.GetBooleanValue("featureKey", false);
 
-## Suggestions for a good README
+            if(isFeatureEnabled)
+                runNewFeatureMethod();
+            else
+                runOriginVariationMethod();
+        }
+    }
+}
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+#### Customize the Kameleoon provider
 
-## Name
-Choose a self-explaining name for your project.
+You can customize the Kameleoon provider by changing the `KameleoonClientConfig` object that you passed to the constructor above. For example:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```csharp
+var config = new KameleoonClientConfig(
+    clientId: "<clientId>", // mandatory
+    clientSecret: "<clientSecret>", // mandatory
+    refreshIntervalMinute: 1, // optional
+    sessionDurationMinute: 60 // optional
+);
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+var kameleoonProvider = new KameleoonProvider("<YOUR-SITE-CODE>", config);
+```
+> [!NOTE]
+> For additional configuration options, see the [Kameleoon documentation](https://developers.kameleoon.com/feature-management-and-experimentation/web-sdks/csharp-sdk/#example-code).
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## EvaluationContext and Kameleoon Data
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Kameleoon uses the concept of associating `Data` to users, while the OpenFeature SDK uses the concept of an `EvaluationContext`, which is a dictionary of string keys and values. The Kameleoon provider maps the `EvaluationContext` to the Kameleoon `Data`.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+> [!NOTE]
+> To get the evaluation for a specific visitor, set the `TargetingKey` value for the `EvaluationContext` to the visitor code (user ID). If the value is not provided, then the `defaultValue` parameter will be returned.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+```csharp
+var context = EvaluationContext.Builder().SetTargetingKey("userId").Build();
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+The Kameleoon provider provides a few predefined parameters that you can use to target a visitor from a specific audience and track each conversion. These are:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+| Parameter | Description |
+|-----------|-------------|
+| `Data.Type.CustomData` | The parameter is used to set [`CustomData`](https://developers.kameleoon.com/feature-management-and-experimentation/web-sdks/csharp-sdk/#customdata) for a visitor. |
+| `Data.Type.Conversion` | The parameter is used to track a [`Conversion`](https://developers.kameleoon.com/feature-management-and-experimentation/web-sdks/csharp-sdk/#conversion) for a visitor. |
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### Data.CustomData
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+Use `Data.CustomData` to set [`CustomData`](https://developers.kameleoon.com/feature-management-and-experimentation/web-sdks/csharp-sdk/#customdata) for a visitor. The `Data.CustomData` field has the following parameters:
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+| Parameter | Type | Description |
+|-----------| ---- | ----------- |
+| `Data.CustomDataType.Index` | int | Index or ID of the custom data to store. This field is mandatory. |
+| `Data.CustomDataType.Values` | string |Value of the custom data to store. This field is mandatory. |
 
-## License
-For open source projects, say how it is licensed.
+#### Example
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```csharp
+var context = EvaluationContext.Builder()
+    .SetTargetingKey("userId")
+    .Set(Data.Type.CustomData, new Structure(
+        new Dictionary<string, Value> {
+            { Data.CustomDataType.Index, new Value(1) },
+            { Data.CustomDataType.Values, new Value("10").ToList() }
+        })
+    )
+    .Build();
+```
+
+### Data.Conversion
+
+Use `Data.Conversion` to track a [`Conversion`](https://developers.kameleoon.com/feature-management-and-experimentation/web-sdks/csharp-sdk/#conversion) for a visitor. The `Data.Conversion` field has the following parameters:
+
+| Parameter | Type | Description |
+|-----------| ---- | ----------- |
+| `Data.ConversionType.GoalId` | int | Identifier of the goal. This field is mandatory. |
+| `Data.ConversionType.Revenue` | float | Revenue associated with the conversion. This field is optional. |
+
+#### Example
+```csharp
+var context = EvaluationContext.Builder()
+    .SetTargetingKey("userId")
+    .Set(Data.Type.Conversion, new Structure(
+        new Dictionary<string, Value> {
+            { Data.ConversionType.GoalId, new Value(1) },
+            { Data.ConversionType.Revenue, new Value(200) },
+        })
+    )
+    .Build();
+```
+
+### Use multiple Kameleoon Data types
+
+You can provide many different kinds of Kameleoon data within a single `EvaluationContext` instance.
+
+For example, the following code provides one `Data.Conversion` instance and two `Data.CustomData` instances.
+
+```csharp
+var context = EvaluationContext.Builder()
+    .SetTargetingKey("userId")
+    .Set(Data.Type.Conversion, new Structure(
+        new Dictionary<string, Value> {
+            { Data.ConversionType.GoalId, new Value(1) },
+            { Data.ConversionType.Revenue, new Value(200) },
+        })
+    )
+    .Set(Data.Type.CustomData, new Value(new Value[] {
+        new(new Structure(
+            new Dictionary<string, Value> {
+                { Data.CustomDataType.Index, new Value(1) },
+                { Data.CustomDataType.Values, new Value("10").ToList() }
+            }
+        )),
+        new(new Structure(
+            new Dictionary<string, Value> {
+                { Data.CustomDataType.Index, new Value(2) },
+                { Data.CustomDataType.Values, new Value("20").ToList() }
+            }
+        )),
+    }))
+    .Build();
+```
