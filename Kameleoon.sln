@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kameleoon.OpenFeature", "Kameleoon.OpenFeature\Kameleoon.OpenFeature.csproj", "{93BAAAE7-B966-48EF-8B50-FF8990E4B34A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kameleoon.OpenFeature.Tests", "Kameleoon.OpenFeature.Tests\Kameleoon.OpenFeature.Tests.csproj", "{FD9E5F49-6890-43A6-B4E6-B0A9880B3420}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93BAAAE7-B966-48EF-8B50-FF8990E4B34A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93BAAAE7-B966-48EF-8B50-FF8990E4B34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93BAAAE7-B966-48EF-8B50-FF8990E4B34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93BAAAE7-B966-48EF-8B50-FF8990E4B34A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9E5F49-6890-43A6-B4E6-B0A9880B3420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9E5F49-6890-43A6-B4E6-B0A9880B3420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9E5F49-6890-43A6-B4E6-B0A9880B3420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9E5F49-6890-43A6-B4E6-B0A9880B3420}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

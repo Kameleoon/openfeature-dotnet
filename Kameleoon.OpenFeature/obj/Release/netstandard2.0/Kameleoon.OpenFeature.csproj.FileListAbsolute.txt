@@ -1,0 +1,10 @@
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/bin/Release/netstandard2.0/Kameleoon.OpenFeature.deps.json
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/bin/Release/netstandard2.0/Kameleoon.OpenFeature.dll
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/bin/Release/netstandard2.0/Kameleoon.OpenFeature.pdb
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/obj/Release/netstandard2.0/Kameleoon.OpenFeature.csproj.AssemblyReference.cache
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/obj/Release/netstandard2.0/Kameleoon.OpenFeature.GeneratedMSBuildEditorConfig.editorconfig
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/obj/Release/netstandard2.0/Kameleoon.OpenFeature.AssemblyInfoInputs.cache
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/obj/Release/netstandard2.0/Kameleoon.OpenFeature.AssemblyInfo.cs
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/obj/Release/netstandard2.0/Kameleoon.OpenFeature.csproj.CoreCompileInputs.cache
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/obj/Release/netstandard2.0/Kameleoon.OpenFeature.dll
+/builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/obj/Release/netstandard2.0/Kameleoon.OpenFeature.pdb

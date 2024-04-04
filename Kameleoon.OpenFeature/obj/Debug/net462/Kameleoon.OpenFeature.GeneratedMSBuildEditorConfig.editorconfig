@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = Kameleoon.OpenFeature
+build_property.ProjectDir = /builds/sdk/openfeature-dotnet/Kameleoon.OpenFeature/

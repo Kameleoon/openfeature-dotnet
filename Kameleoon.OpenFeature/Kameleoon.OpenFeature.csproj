@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+		<PackageVersion>0.0.1</PackageVersion>
+		<LangVersion>8.0</LangVersion>
+		<Version>$(PackageVersion)</Version>
+		<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="KameleoonClient" Version="4.4.1" />
+    <PackageReference Include="OpenFeature" Version="1.5.0" />
+  </ItemGroup>
+</Project>
