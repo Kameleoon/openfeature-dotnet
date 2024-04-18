@@ -85,7 +85,9 @@ namespace Kameleoon.OpenFeature
             var structCustomData = value.AsStructure;
             var index = structCustomData.GetValue(Data.CustomDataType.Index).AsInteger ?? 0;
             structCustomData.TryGetValue(Data.CustomDataType.Values, out var structValues);
-            var values = (structValues?.AsList ?? Enumerable.Empty<Value>())
+            var values = structValues?.IsString == true
+                ? new[] { structValues!.AsString }
+                : (structValues?.AsList ?? Enumerable.Empty<Value>())
                     .Select(v => v.AsString)
                     .Where(s => s != null)
                     .ToArray();

@@ -60,7 +60,10 @@ namespace Kameleoon.OpenFeature.Tests
             var expectedIndex = new Random().Next();
             var customDataDictionary =
                     new Dictionary<string, Value> { { Data.CustomDataType.Index, new Value(expectedIndex) } };
-            if (expectedValues.Length > 0)
+            if (expectedValues.Length == 1)
+                customDataDictionary.Add(Data.CustomDataType.Values,
+                        new Value(expectedValues[0]));
+            else if (expectedValues.Length > 1)
                 customDataDictionary.Add(Data.CustomDataType.Values,
                         new Value(expectedValues.Select(v => new Value(v)).ToList()));
             var context = EvaluationContext.Builder()

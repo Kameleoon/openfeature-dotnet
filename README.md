@@ -195,13 +195,13 @@ var context = EvaluationContext.Builder()
         new(new Structure(
             new Dictionary<string, Value> {
                 { Data.CustomDataType.Index, new Value(1) },
-                { Data.CustomDataType.Values, new Value("10").ToList() }
+                { Data.CustomDataType.Values, new Value(new List<Value> { new("10"), new("30") }) }
             }
         )),
         new(new Structure(
             new Dictionary<string, Value> {
                 { Data.CustomDataType.Index, new Value(2) },
-                { Data.CustomDataType.Values, new Value("20").ToList() }
+                { Data.CustomDataType.Values, new Value("20") }
             }
         )),
     }))
