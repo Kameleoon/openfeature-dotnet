@@ -69,7 +69,7 @@ paket add OpenFeature
 
 ### Usage
 
-The following example shows how to use the ConfigCat provider with the OpenFeature SDK.
+The following example shows how to use the Kameleoon provider with the OpenFeature SDK.
 
 ```csharp
 using Kameleoon.OpenFeature;
@@ -85,7 +85,10 @@ namespace Kameleoon.OpenFeature.App
 
             var client = OpenFeature.Api.Instance.GetClient();
 
-            var isFeatureEnabled = client.GetBooleanValue("featureKey", false);
+            var context = EvaluationContext.Builder()
+                .SetTargetingKey("visitorCode")
+                .Build();
+            var isFeatureEnabled = client.GetBooleanValue("featureKey", false, context);
 
             if(isFeatureEnabled)
                 runNewFeatureMethod();
