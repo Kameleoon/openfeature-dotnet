@@ -24,21 +24,29 @@ First, choose your preferred dependency manager from the following options and i
 
 ```shell
 dotnet add package Kameleoon.OpenFeature
+dotnet add package KameleoonClient
+dotnet add package OpenFeature
 ```
 #### Package Manager
 
 ```shell
 NuGet\Install-Package Kameleoon.OpenFeature
+NuGet\Install-Package KameleoonClient
+NuGet\Install-Package OpenFeature
 ```
 #### Package Reference
 
 ```xml
 <PackageReference Include="Kameleoon.OpenFeature" />
+<PackageReference Include="KameleoonClient" />
+<PackageReference Include="OpenFeature" />
 ```
 #### Packet CLI
 
 ```shell
 paket add Kameleoon.OpenFeature
+paket add KameleoonClient
+paket add OpenFeature
 ```
 
 #### Cake
@@ -46,9 +54,17 @@ paket add Kameleoon.OpenFeature
 ```shell
 // Install Kameleoon.OpenFeature as a Cake Addin
 #addin nuget:?package=Kameleoon.OpenFeature
+// Install KameleoonClient as a Cake Addin
+#addin nuget:?package=KameleoonClient&version=4.4.1
+// Install OpenFeature as a Cake Addin
+#addin nuget:?package=OpenFeature&version=1.5.0
 
 // Install Kameleoon.OpenFeature as a Cake Tool
 #tool nuget:?package=Kameleoon.OpenFeature
+// Install KameleoonClient as a Cake Tool
+#tool nuget:?package=KameleoonClient&version=4.4.1
+// Install OpenFeature as a Cake Tool
+#tool nuget:?package=OpenFeature&version=1.5.0
 ```
 
 ### Usage
@@ -69,7 +85,7 @@ namespace Kameleoon.OpenFeature.App
 
             var client = OpenFeature.Api.Instance.GetClient();
 
-            var context = EvaluationContext()
+            var context = EvaluationContext.Builder()
                 .SetTargetingKey("visitorCode")
                 .Build();
             var isFeatureEnabled = client.GetBooleanValue("featureKey", false, context);

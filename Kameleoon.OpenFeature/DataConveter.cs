@@ -10,7 +10,7 @@ using OpenFeature.Model;
 namespace Kameleoon.OpenFeature
 {
     /// <summary>
-    /// DataConverter is used to convert a data from OpenFeature to Kameleoon.
+    /// DataConverter is used to convert a data from OpenFeature to Kameleoon and back.
     /// </summary>
     static class DataConverter
     {
@@ -72,6 +72,8 @@ namespace Kameleoon.OpenFeature
                     if (jValue.Value is long value)
                         return new Value((int)value);
                     return new Value(jValue.Value);
+                case Value opfValue:
+                    return opfValue;
                 default:
                     return new Value();
             }

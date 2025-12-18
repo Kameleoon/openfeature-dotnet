@@ -61,8 +61,7 @@ namespace Kameleoon.OpenFeature.Tests
             var customDataDictionary =
                     new Dictionary<string, Value> { { Data.CustomDataType.Index, new Value(expectedIndex) } };
             if (expectedValues.Length == 1)
-                customDataDictionary.Add(Data.CustomDataType.Values,
-                        new Value(expectedValues[0]));
+                customDataDictionary.Add(Data.CustomDataType.Values, new Value(expectedValues[0]));
             else if (expectedValues.Length > 1)
                 customDataDictionary.Add(Data.CustomDataType.Values,
                         new Value(expectedValues.Select(v => new Value(v)).ToList()));

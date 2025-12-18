@@ -14,7 +14,8 @@ namespace Kameleoon.OpenFeature
     /// KameleoonProvider is the OpenFeature <see cref="FeatureProvider"/> for Kameleoon SDK.
     /// </summary>
     /// <example>
-    ///     var config = new KameleoonClientConfig(clientId: clientId, clientSecret: clientSecret);
+    ///     var config = new KameleoonClientConfig(
+    ///         clientId: clientId, clientSecret: clientSecret, topLevelDomain: topLevelDomain);
     ///     var provider = new KameleoonProvider(siteCode, config);
     ///
     ///     OpenFeature.Api.Instance.SetProvider(provider);
@@ -23,9 +24,6 @@ namespace Kameleoon.OpenFeature
     /// </example>
     public sealed class KameleoonProvider : FeatureProvider
     {
-        /// <summary>
-        /// The value Anonymous is used when no Targeted Key provided with the <see cref="EvaluationContext"/>
-        /// </summary>
         private const string MetaName = "Kameleoon Provider";
 
         private readonly string _siteCode;
@@ -38,7 +36,7 @@ namespace Kameleoon.OpenFeature
         /// available in OpenFeature.
         /// </para>
         /// </summary>
-        public IKameleoonClient Client { get; }
+        public IKameleoonClient? Client { get; private set; }
 
         /// <summary>
         /// Create a new instance of the provider with the given siteCode and config.
@@ -81,7 +79,7 @@ namespace Kameleoon.OpenFeature
             }
             catch (KameleoonException.SiteCodeIsEmpty ex)
             {
-                throw new FeatureProviderException(ErrorType.ProviderNotReady, innerException: ex);
+                throw new ProviderNotReadyException(innerException: ex);
             }
         }
 
@@ -123,18 +121,24 @@ namespace Kameleoon.OpenFeature
         /// <inheritdoc/>
         public override ProviderStatus GetStatus()
         {
+            if (Client == null)
+                return ProviderStatus.NotReady;
+
             var task = Client.WaitInit();
-            return task.IsCompleted && !task.IsFaulted && !task.IsCanceled ?
-                    ProviderStatus.Ready : ProviderStatus.NotReady;
+
+            return task.IsCompleted && !task.IsFaulted && !task.IsCanceled
+                ? ProviderStatus.Ready
+                : ProviderStatus.NotReady;
         }
 
         /// <inheritdoc/>
-        public override Task Initialize(EvaluationContext context) => Client.WaitInit();
+        public override Task Initialize(EvaluationContext context) => Client?.WaitInit() ?? Task.CompletedTask;
 
         /// <inheritdoc/>
         public override Task Shutdown()
         {
             KameleoonClientFactory.Forget(_siteCode);
+            Client = null;
             return Task.CompletedTask;
         }
     }

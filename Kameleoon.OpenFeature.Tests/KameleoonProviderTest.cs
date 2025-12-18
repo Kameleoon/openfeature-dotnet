@@ -33,7 +33,7 @@ namespace Kameleoon.OpenFeature.Tests
             string siteCode = ""; // or any invalid site code that will trigger the exception
 
             // Act & Assert
-            Assert.Throws<FeatureProviderException>(() => new KameleoonProvider(siteCode, _config));
+            Assert.Throws<ProviderNotReadyException>(() => new KameleoonProvider(siteCode, _config));
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace Kameleoon.OpenFeature.Tests
                         .Returns(new ResolutionDetails<object>(FlagKey, expectedResult, ErrorType.None, null));
 
             // Act
-            var result = await _provider.ResolveStructureValue(FlagKey, defaultValue, null);
+            var result = await _provider.ResolveStructureValue(FlagKey, defaultValue);
 
             // Assert
             Assert.Equal(FlagKey, result.FlagKey);

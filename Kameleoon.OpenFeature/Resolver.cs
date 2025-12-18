@@ -44,10 +44,13 @@ namespace Kameleoon.OpenFeature
 
                 // Add targeting data from context to KameleoonClient by visitor code
                 _client.AddData(visitorCode, DataConverter.ToKameleoon(context).ToArray());
+
                 // Get a variant
                 var variant = _client.GetFeatureVariationKey(visitorCode, flagKey);
+
                 // Get the all variables for the variant
                 var variables = _client.GetFeatureVariationVariables(flagKey, variant);
+
                 // Get variableKey if it's provided in context or any first in variation. It's responsibility of
                 // the client to have only one variable per variation if variableKey is not provided.
                 string variableKey = Variable.TryGet(context) ?? variables.Keys.FirstOrDefault();

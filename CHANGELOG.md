@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.0.3 - 2025-12-18
+* Fixes in the **README.md** documentation and improvements to the stability of `KameleoonProvider`.
+
 ## 0.0.2
 * In addition to accepting a list of OpenFeature `Value` instances, `Data.CustomDataType.Values` can now accept a single OpenFeature `Value` instance as the parameter.
 
